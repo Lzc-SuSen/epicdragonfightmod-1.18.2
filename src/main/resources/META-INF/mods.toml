@@ -1,0 +1,27 @@
+modLoader="javafml" #mandatory
+loaderVersion="[40,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+license="MIT License"
+#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+[[mods]] #mandatory
+modId="epicdragonfight" #mandatory
+version="0.6.47" #mandatory
+displayName="Epic DragonFight" #mandatory
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+#logoFile="examplemod.png" #optional
+#credits="Thanks for this example mod goes to Java" #optional
+#authors="Love, Cheese and small house plants" #optional
+description='''
+'''
+
+[[dependencies.epicdragonfight]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[40,)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.epicdragonfight]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.2,1.19)"
+    ordering="NONE"
+    side="BOTH"
