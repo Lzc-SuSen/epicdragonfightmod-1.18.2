@@ -2,7 +2,6 @@ package susen36.epicdragonfight.client.events.engine;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.LocalPlayer;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoader;
@@ -23,7 +21,6 @@ import susen36.epicdragonfight.EpicDragonFight;
 import susen36.epicdragonfight.api.client.forgeevent.PatchedRenderersEvent;
 import susen36.epicdragonfight.api.client.forgeevent.RenderEnderDragonEvent;
 import susen36.epicdragonfight.api.utils.math.Vec3f;
-import susen36.epicdragonfight.client.renderer.AimHelperRenderer;
 import susen36.epicdragonfight.client.renderer.patched.entity.PEnderDragonRenderer;
 import susen36.epicdragonfight.client.renderer.patched.entity.PatchedEntityRenderer;
 import susen36.epicdragonfight.world.capabilities.DragonFightCapabilities;
@@ -38,7 +35,7 @@ import java.util.function.Supplier;
 public class RenderEngine {
 	private static final Vec3f AIMING_CORRECTION = new Vec3f(-1.5F, 0.0F, 1.25F);
 	
-	public AimHelperRenderer aimHelper;
+
 
 	private Minecraft minecraft;
 	private Map<EntityType<?>, Supplier<PatchedEntityRenderer>> entityRendererProvider;
@@ -63,8 +60,6 @@ public class RenderEngine {
 	
 	public void registerRenderer() {
 		this.entityRendererProvider.put(EntityType.ENDER_DRAGON, PEnderDragonRenderer::new);
-
-		this.aimHelper = new AimHelperRenderer();
 		
 		ModLoader.get().postEvent(new PatchedRenderersEvent.Add(this.entityRendererProvider));
 		
@@ -112,14 +107,6 @@ public class RenderEngine {
 					event.setCanceled(true);
 					renderEngine.renderEntityArmatureModel(livingentity, entitypatch, event.getRenderer(), event.getMultiBufferSource(), event.getPoseStack(), event.getPackedLight(), event.getPartialTick());
 				}
-			}
-		}
-
-		@SubscribeEvent
-		public static void renderWorldLast(RenderLevelStageEvent event) {
-			if (renderEngine.zoomCount > 0 && renderEngine.minecraft.options.getCameraType() == CameraType.THIRD_PERSON_BACK
-					&& event.getStage() == RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
-				renderEngine.aimHelper.doRender(event.getPoseStack(), event.getPartialTick());
 			}
 		}
 		

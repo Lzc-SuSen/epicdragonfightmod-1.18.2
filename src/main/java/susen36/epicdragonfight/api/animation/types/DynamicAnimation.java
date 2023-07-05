@@ -7,7 +7,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import susen36.epicdragonfight.api.animation.*;
 import susen36.epicdragonfight.api.animation.property.AnimationProperty;
 import susen36.epicdragonfight.api.client.animation.JointMask.BindModifier;
-import susen36.epicdragonfight.config.ConfigurationIngame;
 import susen36.epicdragonfight.gameasset.Animations;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
 
@@ -22,7 +21,7 @@ public abstract class DynamicAnimation {
 	protected float totalTime = 0.0F;
 	
 	public DynamicAnimation() {
-		this(ConfigurationIngame.GENERAL_ANIMATION_CONVERT_TIME, false);
+		this(0.15F, false);
 	}
 	
 	public DynamicAnimation(float convertTime, boolean isRepeat) {

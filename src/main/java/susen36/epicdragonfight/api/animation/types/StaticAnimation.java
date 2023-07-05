@@ -1,14 +1,7 @@
 
 package susen36.epicdragonfight.api.animation.types;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
 import com.google.common.collect.Maps;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,8 +18,13 @@ import susen36.epicdragonfight.api.client.animation.Layer;
 import susen36.epicdragonfight.api.client.animation.Layer.LayerType;
 import susen36.epicdragonfight.api.model.JsonModelLoader;
 import susen36.epicdragonfight.api.model.Model;
-import susen36.epicdragonfight.config.ConfigurationIngame;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class StaticAnimation extends DynamicAnimation {
 	protected final Map<AnimationProperty<?>, Object> properties = Maps.newHashMap();
@@ -47,7 +45,7 @@ public class StaticAnimation extends DynamicAnimation {
 	}
 	
 	public StaticAnimation(boolean repeatPlay, String path, Model model) {
-		this(ConfigurationIngame.GENERAL_ANIMATION_CONVERT_TIME, repeatPlay, path, model);
+		this(0.15F, repeatPlay, path, model);
 	}
 	
 	public StaticAnimation(float convertTime, boolean isRepeat, String path, Model model) {

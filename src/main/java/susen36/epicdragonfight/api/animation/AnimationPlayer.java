@@ -2,7 +2,6 @@ package susen36.epicdragonfight.api.animation;
 
 import susen36.epicdragonfight.api.animation.property.AnimationProperty.ActionAnimationCoordSetter;
 import susen36.epicdragonfight.api.animation.types.DynamicAnimation;
-import susen36.epicdragonfight.config.ConfigurationIngame;
 import susen36.epicdragonfight.gameasset.Animations;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
 
@@ -21,7 +20,7 @@ public class AnimationPlayer {
 	
 	public void tick(LivingEntityPatch<?> entitypatch) {
 		this.prevElapsedTime = this.elapsedTime;
-		this.elapsedTime += ConfigurationIngame.A_TICK * this.getAnimation().getPlaySpeed(entitypatch) *
+		this.elapsedTime += 0.05 * this.getAnimation().getPlaySpeed(entitypatch) *
 				(this.isReversed() && this.getAnimation().canBePlayedReverse() ? -1.0F : 1.0F); 
 		
 		if (this.elapsedTime >= this.play.getTotalTime()) {
