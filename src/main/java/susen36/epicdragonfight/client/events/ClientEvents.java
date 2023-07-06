@@ -13,7 +13,6 @@ import susen36.epicdragonfight.world.capabilities.provider.ProviderEntity;
 @Mod.EventBusSubscriber(modid = EpicDragonFight.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
-	
 	@SubscribeEvent
 	public static void clientLogoutEvent(ClientPlayerNetworkEvent.LoggedOutEvent event) {
 		if (event.getPlayer() != null) {

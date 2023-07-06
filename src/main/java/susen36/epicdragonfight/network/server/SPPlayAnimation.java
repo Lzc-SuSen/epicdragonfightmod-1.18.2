@@ -17,18 +17,9 @@ public class SPPlayAnimation {
 	protected int entityId;
 	protected float convertTimeModifier;
 
-	public SPPlayAnimation() {
-		this.animationId = 0;
-		this.entityId = 0;
-		this.convertTimeModifier = 0;
-	}
 	
 	public SPPlayAnimation(StaticAnimation animation, float convertTimeModifier, LivingEntityPatch<?> entitypatch) {
 		this(animation.getNamespaceId(), animation.getId(), entitypatch.getOriginal().getId(), convertTimeModifier);
-	}
-	
-	public SPPlayAnimation(StaticAnimation animation, int entityId, float convertTimeModifier) {
-		this(animation.getNamespaceId(), animation.getId(), entityId, convertTimeModifier);
 	}
 	
 	public SPPlayAnimation(int namespaceId, int animation, int entityId, float convertTimeModifier) {
@@ -38,7 +29,7 @@ public class SPPlayAnimation {
 		this.convertTimeModifier = convertTimeModifier;
 	}
 	
-	public <T extends SPPlayAnimation> void onArrive() {
+	public void onArrive() {
 		Minecraft mc = Minecraft.getInstance();
 		Entity entity = mc.player.level.getEntity(this.entityId);
 		

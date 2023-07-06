@@ -8,7 +8,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class AreaEffectBreath extends AreaEffectCloud {
 	public AreaEffectBreath(Level level, double x, double y, double z) {
 		this(DragonFightEntities.AREA_EFFECT_BREATH.get(), level);
 		this.setPos(x, y, z);
-		Vec3 initialFirePosition = new Vec3(x, y, z);
 	}
 
     @Override
@@ -75,15 +73,10 @@ public class AreaEffectBreath extends AreaEffectCloud {
 			}
 		}
 	}
-
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.getEntityData().define(DATA_HORIZONTAL, true);
-	}
-
-	protected void setHorizontal(boolean setter) {
-		this.getEntityData().set(DATA_HORIZONTAL, setter);
 	}
 
 	public boolean isHorizontal() {

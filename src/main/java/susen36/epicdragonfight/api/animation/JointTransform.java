@@ -16,11 +16,11 @@ public class JointTransform {
 	public static final String PARENT = "parent";
 	public static final String RESULT1 = "front_result";
 	public static final String RESULT2 = "overwrite_rotation";
-	
+
 	public static class TransformEntry {
 		public final MatrixOperation multiplyFunction;
 		public final JointTransform transform;
-		
+
 		public TransformEntry(MatrixOperation multiplyFunction, JointTransform transform) {
 			this.multiplyFunction = multiplyFunction;
 			this.transform = transform;
@@ -61,10 +61,8 @@ public class JointTransform {
 		this.translation.set(newV.x, newV.y, newV.z);
 		this.rotation.set(newQ.i(), newQ.j(), newQ.k(), newQ.r());
 		this.scale.set(newS.x, newS.y, newS.z);
-		
-		for (Map.Entry<String, TransformEntry> entry : jt.entries.entrySet()) {
-			this.entries.put(entry.getKey(), entry.getValue());
-		}
+
+		this.entries.putAll(jt.entries);
 		
 		return this;
 	}

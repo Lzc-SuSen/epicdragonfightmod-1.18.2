@@ -29,7 +29,6 @@ public class SPChangeLivingMotion {
 	}
 	
 
-	
 	public static SPChangeLivingMotion fromBytes(FriendlyByteBuf buf) {
 		SPChangeLivingMotion msg = new SPChangeLivingMotion(buf.readInt(), buf.readInt(), buf.readBoolean());
 		List<LivingMotion> motionList = Lists.newArrayList();

@@ -3,7 +3,6 @@ package susen36.epicdragonfight.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -56,39 +55,6 @@ public class LightningRenderHelper {
 			vertex01(vertexConsumer, matrix4f, j);
 			vertex4(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
 			vertex2(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
-		}
-	}
-	
-	public static void renderFlashingLight(VertexConsumer vertexConsumer, PoseStack poseStack, int rCol, int gCol, int bCol, int density, float size, float progression) {
-		double d1 = progression * 3.0F * Math.PI / 2.0D;
-		float sinDelta = Math.max((float) (d1 < Math.PI / 2.0D ? Math.sin(d1) : Math.sin((d1 + Math.PI / 2.0D) / 2.0D)), 0.0F);
-		float linearDelta = progression < 0.3F ? progression + 0.7F : 1.0F;
-		Random random = new Random(432L);
-		
-		for (int i = 0; i < density; ++i) {
-			poseStack.pushPose();
-			Vector3f randomAxis = new Vector3f(-0.5F + random.nextFloat(), 0.0F, -0.5F + random.nextFloat());
-			randomAxis.normalize();
-			float randomDegree = -120.0F + random.nextFloat() * 240.0F;
-			Quaternion randomRotation = new Quaternion(randomAxis, randomDegree, true);
-			poseStack.mulPose(randomRotation);
-			poseStack.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360.0F));
-
-			float height = 14.0F * linearDelta * size;
-			float width = (0.3F + random.nextFloat()) * size;
-			Matrix4f matrix4f = poseStack.last().pose();
-			int alpha = (int) (255.0F * sinDelta);
-
-			vertex01(vertexConsumer, matrix4f, alpha);
-			vertex2(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
-			vertex3(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
-			vertex01(vertexConsumer, matrix4f, alpha);
-			vertex3(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
-			vertex4(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
-			vertex01(vertexConsumer, matrix4f, alpha);
-			vertex4(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
-			vertex2(vertexConsumer, matrix4f, height, width, rCol, gCol, bCol);
-			poseStack.popPose();
 		}
 	}
 }

@@ -31,7 +31,6 @@ public abstract class PatchedEntityRenderer<E extends LivingEntity, T extends Li
 		renderNameTag = ObfuscationReflectionHelper.findMethod(EntityRenderer.class, "m_7649_", Entity.class, Component.class, PoseStack.class, MultiBufferSource.class, int.class);
 	}
 
-	
 	public void render(E entityIn, T entitypatch, R renderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, float partialTicks) {
 		try {
 			RenderNameplateEvent renderNameplateEvent = new RenderNameplateEvent(entityIn, entityIn.getDisplayName(), renderer, poseStack, buffer, packedLight, partialTicks);
@@ -47,16 +46,12 @@ public abstract class PatchedEntityRenderer<E extends LivingEntity, T extends Li
 
 	public OpenMatrix4f[] getPoseMatrices(T entitypatch, Armature armature, float partialTicks) {
 		armature.initializeTransform();
-        this.setJointTransforms(entitypatch, armature, partialTicks);
 		entitypatch.getClientAnimator().setPoseToModel(partialTicks);
 		OpenMatrix4f[] poseMatrices = armature.getJointTransforms();
 		
 		return poseMatrices;
 	}
 
-	protected void setJointTransform(int jointId, Armature modelArmature, OpenMatrix4f mat) {
-		modelArmature.searchJointById(jointId).getAnimatedTransform().mulFront(mat);
-	}
 	
 	public void mulPoseStack(PoseStack poseStack, Armature armature, E entityIn, T entitypatch, float partialTicks) {
 		OpenMatrix4f modelMatrix = entitypatch.getModelMatrix(partialTicks);
@@ -66,7 +61,5 @@ public abstract class PatchedEntityRenderer<E extends LivingEntity, T extends Li
         MathUtils.rotateStack(poseStack, transpose);
         MathUtils.scaleStack(poseStack, transpose);
 	}
-	
-	protected void setJointTransforms(T entitypatch, Armature armature, float partialTicks) {}
 
 }

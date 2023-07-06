@@ -1,16 +1,15 @@
 package susen36.epicdragonfight.world.entity.ai.goal;
 
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.world.entity.Entity;
 import susen36.epicdragonfight.api.animation.types.StaticAnimation;
 import susen36.epicdragonfight.network.server.SPPlayAnimation;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch.AnimationPacketProvider;
 import susen36.epicdragonfight.world.capabilities.entitypatch.MobPatch;
+
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class CombatBehaviors<T extends MobPatch<?>> {
 	private final List<BehaviorSeries<T>> behaviorSeriesList = Lists.newArrayList();
@@ -297,11 +296,6 @@ public class CombatBehaviors<T extends MobPatch<?>> {
 				return this;
 			}
 			
-			public Builder<T> emptyBehavior() {
-				this.behavior = (mobpatch) -> {};
-				return this;
-			}
-			
 			public Builder<T> animationBehavior(StaticAnimation motion) {
 				this.behavior = (mobpatch) -> {
 					mobpatch.playAnimationSynchronized(motion, 0.0F, this.packetProvider);
@@ -309,12 +303,6 @@ public class CombatBehaviors<T extends MobPatch<?>> {
 				
 				return this;
 			}
-			
-			public Builder<T> withinEyeHeight() {
-				this.predicate(new TargetWithinEyeHeight<T>());
-				return this;
-			}
-			
 			public Builder<T> randomChance(float chance) {
 				this.predicate(new RandomChance<T>(chance));
 				return this;
@@ -347,11 +335,6 @@ public class CombatBehaviors<T extends MobPatch<?>> {
 			
 			public Builder<T> predicate(BehaviorPredicate<T> predicate) {
 				this.predicate.add(predicate);
-				return this;
-			}
-			
-			public Builder<T> packetProvider(AnimationPacketProvider packetProvider) {
-				this.packetProvider = packetProvider;
 				return this;
 			}
 			
@@ -388,13 +371,7 @@ public class CombatBehaviors<T extends MobPatch<?>> {
 			return mobpatch.getOriginal().getRandom().nextFloat() < this.chance;
 		}
 	}
-	
-	public static class TargetWithinEyeHeight<T extends MobPatch<?>> extends BehaviorPredicate<T> {
-		public boolean test(T mobpatch) {
-			double veticalDistance = Math.abs(mobpatch.getOriginal().getY() - mobpatch.getTarget().getY());
-			return veticalDistance < mobpatch.getOriginal().getEyeHeight();
-		}
-	}
+
 	
 	public static class TargetWithinDistance<T extends MobPatch<?>> extends BehaviorPredicate<T> {
 		private final double minDistance;

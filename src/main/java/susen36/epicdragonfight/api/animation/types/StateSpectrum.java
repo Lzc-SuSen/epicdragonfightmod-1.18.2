@@ -21,10 +21,8 @@ public class StateSpectrum {
 		TypeFlexibleHashMap<StateFactor<?>> stateMap = this.getStateMap(time);
 		
 		boolean turningLocked = stateMap.getOrDefault(EntityState.TURNING_LOCKED, EntityState.TURNING_LOCKED.getDefaultVal());
-		boolean movementLocked = stateMap.getOrDefault(EntityState.MOVEMENT_LOCKED, EntityState.MOVEMENT_LOCKED.getDefaultVal());
 		boolean attacking = stateMap.getOrDefault(EntityState.ATTACKING, EntityState.ATTACKING.getDefaultVal());
 		boolean canBasicAttack = stateMap.getOrDefault(EntityState.CAN_BASIC_ATTACK, EntityState.CAN_BASIC_ATTACK.getDefaultVal());
-		boolean canSkillExecution = stateMap.getOrDefault(EntityState.CAN_SKILL_EXECUTION, EntityState.CAN_SKILL_EXECUTION.getDefaultVal());
 		boolean inaction = stateMap.getOrDefault(EntityState.INACTION, EntityState.INACTION.getDefaultVal());
 		boolean hurt = stateMap.getOrDefault(EntityState.HURT, EntityState.HURT.getDefaultVal());
 		boolean knockdown = stateMap.getOrDefault(EntityState.KNOCKDOWN, EntityState.KNOCKDOWN.getDefaultVal());
@@ -59,11 +57,6 @@ public class StateSpectrum {
 			this.start = start;
 			this.end = end;
 			this.states = Sets.newHashSet();
-		}
-		
-		public <T> StatesInTime addState(StateFactor<T> factor, T val) {
-			this.states.add(Pair.of(factor, val));
-			return this;
 		}
 	}
 	

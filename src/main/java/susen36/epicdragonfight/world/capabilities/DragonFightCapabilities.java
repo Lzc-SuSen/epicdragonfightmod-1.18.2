@@ -13,6 +13,5 @@ public class DragonFightCapabilities {
 	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
 		event.register(EntityPatch.class);
 	}
-	
 
 }

@@ -23,8 +23,8 @@ import susen36.epicdragonfight.events.CapabilityEvent;
 import susen36.epicdragonfight.events.EntityEvents;
 import susen36.epicdragonfight.gameasset.Animations;
 import susen36.epicdragonfight.gameasset.Models;
-import susen36.epicdragonfight.network.EpicFightDataSerializers;
-import susen36.epicdragonfight.network.EpicFightNetworkManager;
+import susen36.epicdragonfight.network.DraagonFightDataSerializers;
+import susen36.epicdragonfight.network.DragoFightNetworkManager;
 import susen36.epicdragonfight.world.capabilities.DragonFightCapabilities;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
 import susen36.epicdragonfight.world.capabilities.provider.ProviderEntity;
@@ -55,7 +55,7 @@ public class EpicDragonFight {
     	bus.addListener(this::doServerStuff);
     	bus.addListener(DragonFightCapabilities::registerCapabilities);
     	bus.addListener(Animations::registerAnimations);
-    	bus.addGenericListener(DataSerializerEntry.class, EpicFightDataSerializers::register);
+    	bus.addGenericListener(DataSerializerEntry.class, DraagonFightDataSerializers::register);
 
     	LivingMotion.ENUM_MANAGER.loadPreemptive(LivingMotions.class);
 
@@ -88,7 +88,7 @@ public class EpicDragonFight {
 	
 	private void doCommonStuff(final FMLCommonSetupEvent event) {
 		event.enqueueWork(this.animationManager::registerAnimations);
-		event.enqueueWork(EpicFightNetworkManager::registerPackets);
+		event.enqueueWork(DragoFightNetworkManager::registerPackets);
 		event.enqueueWork(ProviderEntity::registerEntityPatches);
     }
 

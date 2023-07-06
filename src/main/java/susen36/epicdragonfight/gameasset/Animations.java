@@ -1,13 +1,13 @@
 package susen36.epicdragonfight.gameasset;
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.entity.projectile.DragonFireball;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -33,13 +33,12 @@ import susen36.epicdragonfight.api.utils.math.Vec3f;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
 import susen36.epicdragonfight.world.capabilities.entitypatch.boss.enderdragon.EnderDragonPatch;
 import susen36.epicdragonfight.world.capabilities.entitypatch.boss.enderdragon.PatchedPhases;
-import susen36.epicdragonfight.world.entity.DragonBreathBall;
+import susen36.epicdragonfight.world.entity.DragonBreathball;
 
 import java.util.function.Consumer;
 
 public class Animations {
 	public static StaticAnimation DUMMY_ANIMATION = new StaticAnimation();
-
 	public static StaticAnimation DRAGON_IDLE;
 	public static StaticAnimation DRAGON_WALK;
 	public static StaticAnimation DRAGON_FLY;
@@ -50,10 +49,8 @@ public class Animations {
 	public static StaticAnimation DRAGON_ATTACK2;
 	public static StaticAnimation DRAGON_ATTACK3;
 	public static StaticAnimation DRAGON_ATTACK4;
-	public static StaticAnimation DRAGON_ATTACK4_RECOVERY;
 	public static StaticAnimation DRAGON_FIREBALL1;
 	public static StaticAnimation DRAGON_FIREBALL2;
-	public static StaticAnimation DRAGON_FIREBALL3;
 	public static StaticAnimation DRAGON_AIRSTRIKE;
 	public static StaticAnimation DRAGON_BACKJUMP_PREPARE;
 	public static StaticAnimation DRAGON_BACKJUMP_MOVE;
@@ -70,16 +67,14 @@ public class Animations {
 		Models<?> models = FMLEnvironment.dist == Dist.CLIENT ? ClientModels.LOGICAL_CLIENT : Models.LOGICAL_SERVER;
 		Model dragon = models.dragon;
 
-
 		DRAGON_IDLE = new StaticAnimation(0.6F, true, "dragon/idle", dragon);
 		DRAGON_WALK = new EnderDraonWalkAnimation(0.35F, "dragon/walk", dragon,
-				new IKInfo[]{
-						IKInfo.make("Leg_Front_L1", "Leg_Front_L3", "Leg_Front_R3", Pair.of(0, 3), 0.12F, 0, new boolean[]{true, true, true}),
-						IKInfo.make("Leg_Front_R1", "Leg_Front_R3", "Leg_Front_L3", Pair.of(2, 5), 0.12F, 2, new boolean[]{true, true, true}),
-						IKInfo.make("Leg_Back_L1", "Leg_Back_L3", "Leg_Back_R3", Pair.of(2, 5), 0.1344F, 4, new boolean[]{true, true, true}),
-						IKInfo.make("Leg_Back_R1", "Leg_Back_R3", "Leg_Back_L3", Pair.of(0, 3), 0.1344F, 2, new boolean[]{true, true, true})
+				new IKInfo[] {
+						IKInfo.make("Leg_Front_L1", "Leg_Front_L3", "Leg_Front_R3", Pair.of(0, 3), 0.12F, 0, new boolean[] {true, true, true}),
+						IKInfo.make("Leg_Front_R1", "Leg_Front_R3", "Leg_Front_L3", Pair.of(2, 5), 0.12F, 2, new boolean[] {true, true, true}),
+						IKInfo.make("Leg_Back_L1", "Leg_Back_L3", "Leg_Back_R3", Pair.of(2, 5), 0.1344F, 4, new boolean[] {true, true, true}),
+						IKInfo.make("Leg_Back_R1", "Leg_Back_R3", "Leg_Back_L3", Pair.of(0, 3), 0.1344F, 2, new boolean[] {true, true, true})
 				});
-
 		DRAGON_FLY = new StaticAnimation(0.35F, true, "dragon/fly", dragon)
 				.addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.4F, ReuseableEvents.WING_FLAP, Side.CLIENT)});
 
@@ -128,9 +123,6 @@ public class Animations {
 				})
 				.addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.3F, ReuseableEvents.WING_FLAP, Side.CLIENT), Event.create(1.1F, (entitypatch) -> {
 					entitypatch.playSound(SoundEvents.STONE_FALL, 0, 0);
-					LivingEntity original = entitypatch.getOriginal();
-					BlockPos blockpos = original.level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, original.blockPosition());
-					//original.level.addParticle(EpicFightParticles.GROUND_SLAM.get(), blockpos.getX(), blockpos.getY(), blockpos.getZ(), 3.0D, 0.0D, 1.0D);
 				}, Side.CLIENT), Event.create(1.1F, (entitypatch) -> {
 					LivingEntity original = entitypatch.getOriginal();
 					DamageSource damageSource = DamageSource.mobAttack(original);
@@ -140,61 +132,53 @@ public class Animations {
 					}
 				}, Side.SERVER)});
 
-		DRAGON_ATTACK1 = new EnderDragonAttackAnimation(0.35F, 0.4F, 0.65F, 0.76F, 1.9F, ColliderPreset.DRAGON_LEG, "Leg_Front_R3", "dragon/attack1", dragon, new IKInfo[]{
+		DRAGON_ATTACK1 = new EnderDragonAttackAnimation(0.35F, 0.4F, 0.45F, 0.76F, 1.9F, ColliderPreset.DRAGON_LEG, "Leg_Front_R3", "dragon/attack1", dragon, new IKInfo[]{
 				IKInfo.make("Leg_Front_L1", "Leg_Front_L3", null, Pair.of(2, 4), 0.12F, 0, new boolean[]{true, true}),
 				IKInfo.make("Leg_Front_R1", "Leg_Front_R3", null, Pair.of(0, 5), 0.12F, 0, new boolean[]{false, false, false, false, true}),
 				IKInfo.make("Leg_Back_L1", "Leg_Back_L3", null, null, 0.1344F, 0, new boolean[]{}),
 				IKInfo.make("Leg_Back_R1", "Leg_Back_R3", null, Pair.of(1, 4), 0.1344F, 0, new boolean[]{true, false, true})
-		})
-				.addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.65F, (entitypatch) -> {
-					entitypatch.playSound(SoundEvents.STONE_FALL, 0, 0);
-
-					if (entitypatch instanceof EnderDragonPatch) {
-						EnderDragonPatch dragonpatch = ((EnderDragonPatch) entitypatch);
-						Vec3f tipPosition = dragonpatch.getTipPointAnimation("Leg_Front_R3").getTargetPosition();
-						LivingEntity original = entitypatch.getOriginal();
-						//original.level.addParticle(EpicFightParticles.GROUND_SLAM.get(), tipPosition.x, tipPosition.y, tipPosition.z, 0.5D, 0.0D, 0.5D);
-					}
-				}, Side.CLIENT)});
+		}).addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.3F, (entitypatch) -> {
+					LivingEntity original = entitypatch.getOriginal();
+					Entity target = entitypatch.getTarget();
+					if(original.distanceTo(target)<=8) {
+						original.doHurtTarget(target);
+					}}, Side.SERVER)});
 
 		DRAGON_ATTACK2 = new EnderDragonAttackAnimation(0.35F, 0.25F, 0.45F, 0.66F, 0.75F, ColliderPreset.DRAGON_LEG, "Leg_Front_R3", "dragon/attack2", dragon, new IKInfo[]{
 				IKInfo.make("Leg_Front_L1", "Leg_Front_L3", null, Pair.of(1, 4), 0.12F, 0, new boolean[]{true, true, true}),
 				IKInfo.make("Leg_Back_L1", "Leg_Back_L3", null, null, 0.1344F, 0, new boolean[]{}),
 				IKInfo.make("Leg_Back_R1", "Leg_Back_R3", null, null, 0.1344F, 0, new boolean[]{})
-		});
+		}).addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.3F, (entitypatch) -> {
+			LivingEntity original = entitypatch.getOriginal();
+			Entity target = entitypatch.getTarget();
+			if(original.distanceTo(target)<=8) {
+				original.doHurtTarget(target);
+			}}, Side.SERVER)});
 
 		DRAGON_ATTACK3 = new EnderDragonAttackAnimation(0.35F, 0.25F, 0.45F, 0.66F, 0.75F, ColliderPreset.DRAGON_LEG, "Leg_Front_L3", "dragon/attack3", dragon, new IKInfo[]{
 				IKInfo.make("Leg_Front_R1", "Leg_Front_R3", null, Pair.of(1, 4), 0.12F, 0, new boolean[]{true, true, true}),
 				IKInfo.make("Leg_Back_L1", "Leg_Back_L3", null, null, 0.1344F, 0, new boolean[]{}),
 				IKInfo.make("Leg_Back_R1", "Leg_Back_R3", null, null, 0.1344F, 0, new boolean[]{})
-		});
+		}).addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.5F, (entitypatch) -> {
+			LivingEntity original = entitypatch.getOriginal();
+			Entity target = entitypatch.getTarget();
+			if(original.distanceTo(target)<=8) {
+				original.doHurtTarget(target);
+			}}, Side.SERVER)});
 
-		DRAGON_ATTACK4 = new EnderDragonAttackAnimation(0.35F, 0.5F, 1.15F, 1.26F, 1.9F, ColliderPreset.DRAGON_BODY, "Root", "dragon/attack4", dragon, new IKInfo[]{
+		DRAGON_ATTACK4 = new EnderDragonAttackAnimation(0.35F, 0.3F, 0.5F, 0.76F, 0.9F, ColliderPreset.DRAGON_BODY, "Root", "dragon/attack4", dragon, new IKInfo[]{
 				IKInfo.make("Leg_Front_L1", "Leg_Front_L3", null, Pair.of(0, 7), 0.12F, 0, new boolean[]{false, false, false, false, true, true, true}),
 				IKInfo.make("Leg_Front_R1", "Leg_Front_R3", null, Pair.of(0, 7), 0.12F, 0, new boolean[]{false, false, false, false, true, true, true}),
 				IKInfo.make("Leg_Back_L1", "Leg_Back_L3", null, Pair.of(3, 8), 0.1344F, 0, new boolean[]{false, false, false, false, true}),
 				IKInfo.make("Leg_Back_R1", "Leg_Back_R3", null, Pair.of(3, 8), 0.1344F, 0, new boolean[]{false, false, false, false, true})
-		})
-				.addProperty(ActionAnimationProperty.MOVE_VERTICAL, true)
-				.addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(1.2F, (entitypatch) -> {
-					entitypatch.playSound(SoundEvents.STONE_FALL, 0, 0);
+		}).addProperty(ActionAnimationProperty.MOVE_VERTICAL, true)
+		   .addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(1.5F, (entitypatch) -> {
+			LivingEntity original = entitypatch.getOriginal();
 
-					if (entitypatch instanceof EnderDragonPatch) {
-						EnderDragonPatch dragonpatch = ((EnderDragonPatch) entitypatch);
-						Vec3f tipPosition = dragonpatch.getTipPointAnimation("Leg_Front_R3").getTargetPosition();
-						LivingEntity original = entitypatch.getOriginal();
-						//original.level.addParticle(EpicFightParticles.GROUND_SLAM.get(), tipPosition.x, tipPosition.y, tipPosition.z, 3.0D, 0.0D, 1.0D);
-					}
-				}, Side.CLIENT), Event.create(1.85F, (entitypatch) -> {
-					entitypatch.getAnimator().reserveAnimation(DRAGON_ATTACK4_RECOVERY);
-				}, Side.BOTH)});
+				for (Entity entity : original.level.getEntities(original, original.getBoundingBox().deflate(8.0D, 0.0D, 8.0D))) {
+					original.doHurtTarget(entity);
 
-		DRAGON_ATTACK4_RECOVERY = new EnderDragonActionAnimation(0.35F, "dragon/attack4_recovery", dragon, new IKInfo[]{
-				IKInfo.make("Leg_Front_L1", "Leg_Front_L3", null, Pair.of(0, 4), 0.12F, 0, new boolean[]{true, false, true, true}),
-				IKInfo.make("Leg_Front_R1", "Leg_Front_R3", null, Pair.of(0, 3), 0.12F, 0, new boolean[]{true, true, true}),
-				IKInfo.make("Leg_Back_L1", "Leg_Back_L3", null, Pair.of(0, 5), 0.1344F, 0, new boolean[]{true, true, false, false, true}),
-				IKInfo.make("Leg_Back_R1", "Leg_Back_R3", null, Pair.of(0, 4), 0.1344F, 0, new boolean[]{true, true, false, false})
-		});
+			}}, Side.SERVER)});
 
 		DRAGON_FIREBALL1 = new EnderDragonActionAnimation(0.16F, "dragon/fireball", dragon, new IKInfo[]{
 				IKInfo.make("Leg_Front_L1", "Leg_Front_L3", null, Pair.of(0, 5), 0.12F, 0, new boolean[]{true, true, true, true, true}),
@@ -205,8 +189,7 @@ public class Animations {
 			LivingEntity original = entitypatch.getOriginal();
 			Entity target = entitypatch.getTarget();
 			Vec3 pos = original.getParts()[0].position();
-			Vec3 toTarget = target.position().subtract(original.position()).normalize().scale(original.getBbWidth()*0.5D);
-
+			Vec3 toTarget = target.position().subtract(original.position()).normalize().scale(original.getBbWidth() * 0.5D);
 			double d6 = (float) (pos.x + toTarget.x);
 			double d7 = (float) (pos.y + 3.0F);
 			double d8 = (float) (pos.z + toTarget.z);
@@ -216,7 +199,7 @@ public class Animations {
 			if (!original.isSilent()) {
 				original.level.levelEvent((Player) null, 1017, original.blockPosition(), 0);
 			}
-			DragonBreathBall dragonBreathball = new DragonBreathBall(original.level, original, d9, d10, d11,1.5f);
+			DragonBreathball dragonBreathball = new DragonBreathball(original.level, original, d9, d10, d11, 2.5f);
 			dragonBreathball.moveTo(d6, d7, d8, 0.0F, 0.0F);
 			original.level.addFreshEntity(dragonBreathball);
 		}, Side.SERVER)});
@@ -229,8 +212,7 @@ public class Animations {
 			LivingEntity original = entitypatch.getOriginal();
 			Entity target = entitypatch.getTarget();
 			Vec3 pos = original.getParts()[0].position();
-			Vec3 toTarget = target.position().subtract(original.position()).normalize().scale(original.getBbWidth()*0.5D);
-
+			Vec3 toTarget = target.position().subtract(original.position()).normalize().scale(original.getBbWidth() * 0.5D);
 			double d6 = (float) (pos.x + toTarget.x);
 			double d7 = (float) (pos.y + 3.0F);
 			double d8 = (float) (pos.z + toTarget.z);
@@ -240,33 +222,9 @@ public class Animations {
 			if (!original.isSilent()) {
 				original.level.levelEvent((Player) null, 1017, original.blockPosition(), 0);
 			}
-			DragonBreathBall dragonBreathball = new DragonBreathBall(original.level, original, d9, d10, d11,1.5f);
-			dragonBreathball.moveTo(d6, d7, d8, 0.0F, 0.0F);
-			original.level.addFreshEntity(dragonBreathball);
-		}, Side.SERVER)});
-		DRAGON_FIREBALL3 = new EnderDragonActionAnimation(0.16F, "dragon/fireball", dragon, new IKInfo[]{
-				IKInfo.make("Leg_Front_L1", "Leg_Front_L3", null, Pair.of(0, 5), 0.12F, 0, new boolean[]{true, true, true, true, true}),
-				IKInfo.make("Leg_Front_R1", "Leg_Front_R3", null, Pair.of(0, 5), 0.12F, 0, new boolean[]{true, true, true, true, true}),
-				IKInfo.make("Leg_Back_L1", "Leg_Back_L3", null, Pair.of(0, 5), 0.1344F, 0, new boolean[]{true, true, true, true, true}),
-				IKInfo.make("Leg_Back_R1", "Leg_Back_R3", null, Pair.of(0, 5), 0.1344F, 0, new boolean[]{true, true, true, true, true})
-		}).addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.65F, (entitypatch) -> {
-			LivingEntity original = entitypatch.getOriginal();
-			Entity target = entitypatch.getTarget();
-			Vec3 pos = original.getParts()[0].position();
-			Vec3 toTarget = target.position().subtract(original.position()).normalize().scale(original.getBbWidth()*0.5D);
-
-			double d6 = (float) (pos.x + toTarget.x);
-			double d7 = (float) (pos.y + 3.0F);
-			double d8 = (float) (pos.z + toTarget.z);
-			double d9 = target.getX() - d6;
-			double d10 = target.getY(0.5D) - d7;
-			double d11 = target.getZ() - d8 - d8;
-			if (!original.isSilent()) {
-				original.level.levelEvent((Player) null, 1017, original.blockPosition(), 0);
-			}
-			DragonBreathBall dragonBreathball = new DragonBreathBall(original.level, original, d9, d10, d11,1.5f);
-			dragonBreathball.moveTo(d6, d7, d8, 0.0F, 0.0F);
-			original.level.addFreshEntity(dragonBreathball);
+			DragonFireball dragonFireball = new DragonFireball(original.level, original, d9, d10, d11);
+			dragonFireball.moveTo(d6, d7, d8, 0.0F, 0.0F);
+			original.level.addFreshEntity(dragonFireball);
 		}, Side.SERVER)});
 		DRAGON_AIRSTRIKE = new StaticAnimation(0.35F, true, "dragon/airstrike", dragon)
 				.addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.3F, ReuseableEvents.WING_FLAP, Side.CLIENT)});
@@ -279,7 +237,7 @@ public class Animations {
 		}).addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.3F, (entitypatch) -> {
 			entitypatch.getAnimator().reserveAnimation(DRAGON_BACKJUMP_MOVE);
 		}, Side.BOTH)});
-		DRAGON_BACKJUMP_MOVE = new AttackAnimation(0.0F, 10.0F, 10.0F, 10.0F, 10.0F, ColliderPreset.FIST, "Root", "dragon/backjump_move", dragon)
+		DRAGON_BACKJUMP_MOVE = new AttackAnimation(0.0F, 10.0F, 10.0F, 10.0F, 10.0F, ColliderPreset.DRAGON_FIST, "Root", "dragon/backjump_move", dragon)
 				.addProperty(AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
 				.addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(1.0F, (entitypatch) -> {
 					entitypatch.getAnimator().reserveAnimation(DRAGON_BACKJUMP_RECOVERY);
@@ -295,12 +253,6 @@ public class Animations {
 				.addProperty(StaticAnimationProperty.EVENTS, new Event[]{Event.create(0.15F, (entitypatch) -> {
 					entitypatch.playSound(SoundEvents.STONE_FALL, 0, 0);
 
-					if (entitypatch instanceof EnderDragonPatch) {
-						EnderDragonPatch dragonpatch = ((EnderDragonPatch) entitypatch);
-						Vec3f tipPosition = dragonpatch.getTipPointAnimation("Leg_Front_R3").getTargetPosition();
-						LivingEntity original = entitypatch.getOriginal();
-						//original.level.addParticle(EpicFightParticles.GROUND_SLAM.get(), tipPosition.x, tipPosition.y, tipPosition.z, 3.0D, 0.0D, 1.0D);
-					}
 				}, Side.CLIENT)});
 
 		DRAGON_CRYSTAL_LINK = new EnderDragonActionAnimation(0.5F, "dragon/crystal_link", dragon, new IKInfo[]{
@@ -318,7 +270,7 @@ public class Animations {
 					}
 				}, Side.SERVER), Event.create(7.0F, (entitypatch) -> {
 					Entity original = entitypatch.getOriginal();
-					//original.level.addParticle(EpicFightParticles.FORCE_FIELD_END.get(), original.getX(), original.getY() + 2.0D, original.getZ(), 0, 0, 0);
+					original.level.addParticle(ParticleTypes.EXPLOSION, original.getX(), original.getY() + 2.0D, original.getZ(), 0, 0, 0);
 				}, Side.CLIENT)});
 
 		DRAGON_NEUTRALIZED = new EnderDragonActionAnimation(0.1F, "dragon/neutralized", dragon, new IKInfo[]{
@@ -350,6 +302,5 @@ public class Animations {
 				((EnderDragonPatch) entitypatch).getOriginal().onFlap();
 			}
 		};
-
 	}
 }

@@ -3,7 +3,6 @@ package susen36.epicdragonfight.api.collider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.Entity;
@@ -21,15 +20,7 @@ public class OBBCollider extends Collider {
 	protected Vec3[] rotatedVertex;
 	protected Vec3[] rotatedNormal;
 	protected Vec3f scale;
-	
-	/**
-	 * make 3d obb
-	 * @param pos1 left_back
-	 * @param pos2 left_front
-	 * @param pos3 right_front
-	 * @param pos4 right_back
-	 * @param modelCenter central position
-	 */
+
 	public OBBCollider(double posX, double posY, double posZ, double center_x, double center_y, double center_z) {
 		this(getInitialAABB(posX, posY, posZ, center_x, center_y, center_z), posX, posY, posZ, center_x, center_y, center_z);
 	}
@@ -63,33 +54,10 @@ public class OBBCollider extends Collider {
 		double maxLength = Math.max(xLength, Math.max(yLength, zLength));
 		return new AABB(maxLength, maxLength, maxLength, -maxLength, -maxLength, -maxLength);
 	}
-	
-	/**
-	 * make 2d obb
-	 * @param pos1 left
-	 * @param pos2 right
-	 * @param modelCenter central position
-	 */
-	public OBBCollider(AABB entityCallAABB, double pos1_x, double pos1_y, double pos1_z, double pos2_x, double pos2_y, double pos2_z, 
-			double norm1_x, double norm1_y, double norm1_z, double norm2_x, double norm2_y, double norm2_z, double center_x, double center_y, double center_z) {
-		super(new Vec3(center_x, center_y, center_z), entityCallAABB);
-		this.modelVertex = new Vec3[2];
-		this.modelNormal = new Vec3[2];
-		this.rotatedVertex = new Vec3[2];
-		this.rotatedNormal = new Vec3[2];
-		this.modelVertex[0] = new Vec3(pos1_x, pos1_y, pos1_z);
-		this.modelVertex[1] = new Vec3(pos2_x, pos2_y, pos2_z);
-		this.modelNormal[0] = new Vec3(norm1_x,norm1_y,norm1_z);
-		this.modelNormal[1] = new Vec3(norm2_x,norm2_y,norm2_z);
-		this.rotatedVertex[0] = new Vec3(0.0D, 0.0D, 0.0D);
-		this.rotatedVertex[1] = new Vec3(0.0D, 0.0D, 0.0D);
-		this.rotatedNormal[0] = new Vec3(0.0D, 0.0D, 0.0D);
-		this.rotatedNormal[1] = new Vec3(0.0D, 0.0D, 0.0D);
-	}
+
 	
 	/**
 	 * make obb from aabb
-	 * @param aabbCopy
 	 */
 	public OBBCollider(AABB aabbCopy) {
 		super(null, null);
@@ -141,36 +109,16 @@ public class OBBCollider extends Collider {
 		Vec3 toOpponent = opponent.worldCenter.subtract(this.worldCenter);
 		
 		for (Vec3 seperateAxis : this.rotatedNormal) {
-			if (!collisionDetection(seperateAxis, toOpponent, this, opponent)) {
+			if (collisionDetection(seperateAxis, toOpponent, this, opponent)) {
 				return false;
 			}
 		}
 		
 		for (Vec3 seperateAxis : opponent.rotatedNormal) {
-			if (!collisionDetection(seperateAxis, toOpponent, this, opponent)) {
+			if (collisionDetection(seperateAxis, toOpponent, this, opponent)) {
 				return false;
 			}
 		}
-		
-		/** Below code detects whether the each line of obb is collide but it is disabled for better performance
-		for(Vector3f norm1 : this.rotatedNormal)
-		{
-			for(Vector3f norm2 : opponent.rotatedNormal)
-			{
-				Vector3f seperateAxis = Vector3f.cross(norm1, norm2, null);
-				
-				if(seperateAxis.x + seperateAxis.y + seperateAxis.z == 0)
-				{
-					continue;
-				}
-				
-				if(!collisionLogic(seperateAxis, toOpponent, this, opponent))
-				{
-					return false;
-				}
-			}
-		}**/
-		
 		return true;
 	}
 	
@@ -204,12 +152,8 @@ public class OBBCollider extends Collider {
 				maxProj2 = temp;
 			}
 		}
-		
-		if (MathUtils.projectVector(distance, seperateAxis).length() > MathUtils.projectVector(maxProj1, seperateAxis).length() + MathUtils.projectVector(maxProj2, seperateAxis).length()) {
-			return false;
-		}
-		
-		return true;
+
+		return MathUtils.projectVector(distance, seperateAxis).length() > MathUtils.projectVector(maxProj1, seperateAxis).length() + MathUtils.projectVector(maxProj2, seperateAxis).length();
 	}
 	
 	@Override

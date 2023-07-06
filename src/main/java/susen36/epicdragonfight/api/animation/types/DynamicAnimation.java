@@ -33,16 +33,7 @@ public abstract class DynamicAnimation {
 	public void addSheet(String jointName, TransformSheet sheet) {
 		this.jointTransforms.put(jointName, sheet);
 	}
-	
-	public final Pose getPoseByTimeRaw(LivingEntityPatch<?> entitypatch, float time, float partialTicks) {
-		Pose pose = new Pose();
-		for (String jointName : this.jointTransforms.keySet()) {
-			if (!entitypatch.isLogicalClient() || this.isJointEnabled(entitypatch, jointName)) {
-				pose.putJointData(jointName, this.jointTransforms.get(jointName).getInterpolatedTransform(time));
-			}
-		}
-		return pose;
-	}
+
 	
 	public Pose getPoseByTime(LivingEntityPatch<?> entitypatch, float time, float partialTicks) {
 		Pose pose = new Pose();
@@ -60,7 +51,6 @@ public abstract class DynamicAnimation {
 	
 	/** Modify the pose which also modified in link animation. **/
 	protected void modifyPose(Pose pose, LivingEntityPatch<?> entitypatch, float time) {
-		;
 	}
 	
 	public void setLinkAnimation(Pose pose1, float convertTimeModifier, LivingEntityPatch<?> entitypatch, LinkAnimation dest) {
@@ -101,7 +91,7 @@ public abstract class DynamicAnimation {
 	public void begin(LivingEntityPatch<?> entitypatch) {}
 	public void tick(LivingEntityPatch<?> entitypatch) {}
 	public void end(LivingEntityPatch<?> entitypatch, boolean isEnd) {}
-	public void linkTick(LivingEntityPatch<?> entitypatch, LinkAnimation linkAnimation) {};
+	public void linkTick(LivingEntityPatch<?> entitypatch, LinkAnimation linkAnimation) {}
 	
 	public boolean isJointEnabled(LivingEntityPatch<?> entitypatch, String joint) {
 		return this.jointTransforms.containsKey(joint);

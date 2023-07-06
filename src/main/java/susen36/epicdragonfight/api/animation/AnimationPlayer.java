@@ -106,8 +106,5 @@ public class AnimationPlayer {
 	public void setReversed(boolean reversed) {
 		this.reversed = reversed;
 	}
-	
-	public boolean isEmpty() {
-		return this.play == Animations.DUMMY_ANIMATION ? true : false;
-	}
+
 }

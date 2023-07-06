@@ -30,16 +30,7 @@ public class AnimationManager extends SimplePreparableReloadListener<Map<Integer
 		}
 		throw new IllegalArgumentException("Unable to find animation. id: " + animationId + ", namespcae hash: " + namespaceId);
 	}
-	
-	public StaticAnimation findAnimationByPath(String resourceLocation) {
-		ResourceLocation rl = new ResourceLocation(resourceLocation);
-		
-		if (this.animationByName.containsKey(rl)) {
-			return this.animationByName.get(rl);
-		}
-		
-		throw new IllegalArgumentException("Unable to find animation: " + rl);
-	}
+
 	
 	public void registerAnimations() {
 		Map<String, Runnable> registryMap = Maps.newHashMap();

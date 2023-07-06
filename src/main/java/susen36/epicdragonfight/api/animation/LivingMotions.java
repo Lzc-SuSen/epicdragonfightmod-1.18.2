@@ -1,8 +1,7 @@
 package susen36.epicdragonfight.api.animation;
 
 public enum LivingMotions implements LivingMotion {
-	IDLE, ANGRY, FLOAT, WALK, RUN, SWIM, FLY, SNEAK, KNEEL, FALL, MOUNT, DEATH, CHASE, SPELLCAST, JUMP, CELEBRATE,
-	DIGGING, ADMIRE, CLIMB, SLEEP, DRINK, NONE, AIM, BLOCK, BLOCK_SHIELD, RELOAD, SHOT;
+	IDLE, WALK, FLY, CHASE,DEATH, NONE;
 	
 	final int id;
 	

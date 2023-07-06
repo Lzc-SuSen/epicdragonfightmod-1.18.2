@@ -8,7 +8,7 @@ import net.minecraft.world.entity.boss.enderdragon.phases.EnderDragonPhaseManage
 public class PhaseManagerPatch extends EnderDragonPhaseManager {
 	private final DragonPhaseInstance[] patchedPhases = new DragonPhaseInstance[EnderDragonPhase.getCount()];
 	
-	public PhaseManagerPatch(EnderDragon dragon, EnderDragonPatch dragonpatch) {
+	public PhaseManagerPatch(EnderDragon dragon) {
 		super(dragon);
 	}
 	

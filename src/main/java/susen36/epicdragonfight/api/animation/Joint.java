@@ -1,9 +1,10 @@
 package susen36.epicdragonfight.api.animation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import susen36.epicdragonfight.api.utils.math.OpenMatrix4f;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Joint {
 	private final List<Joint> subJoints = new ArrayList<Joint> ();
@@ -20,9 +21,7 @@ public class Joint {
 	}
 
 	public void addSubJoint(Joint... joints) {
-		for (Joint joint : joints) {
-			this.subJoints.add(joint);
-		}
+		Collections.addAll(this.subJoints, joints);
 	}
 	
 	public void setAnimatedTransform(OpenMatrix4f animatedTransform) {
@@ -84,19 +83,5 @@ public class Joint {
 			return null;
 		}
 	}
-	
-	/**
-	public void showInfo() {
-		System.out.println("id = " + this.jointId);
-		System.out.println("name = " + this.jointName);
-		System.out.println("local = " + this.localTransform);
-		System.out.print("children = ");
-		for (Joint joint : subJoints) {
-			System.out.print(joint.jointName + " ");
-		}
-		System.out.println();
-		for (Joint joint : subJoints) {
-			joint.showInfo();
-		}
-	}**/
+
 }

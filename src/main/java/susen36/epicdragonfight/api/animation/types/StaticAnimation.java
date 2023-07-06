@@ -189,10 +189,7 @@ public class StaticAnimation extends DynamicAnimation {
 	public Model getModel() {
 		return this.model;
 	}
-	
-	public boolean isBasicAttackAnimation() {
-		return false;
-	}
+
 	
 	@Override
 	public float getPlaySpeed(LivingEntityPatch<?> entitypatch) {
@@ -209,10 +206,7 @@ public class StaticAnimation extends DynamicAnimation {
 		this.properties.put(propertyType, value);
 		return this;
 	}
-	
-	public StateSpectrum.Blueprint getStateSpectrumBP() {
-		return this.stateSpectrumBlueprint;
-	}
+
 	
 	@SuppressWarnings("unchecked")
 	@Override

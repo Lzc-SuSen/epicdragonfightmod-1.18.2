@@ -14,10 +14,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import susen36.epicdragonfight.world.entity.DragonBreathBall;
+import susen36.epicdragonfight.world.entity.DragonBreathball;
 
 @OnlyIn(Dist.CLIENT)
-public class DragonBreathBallRenderer extends EntityRenderer<DragonBreathBall> {
+public class DragonBreathBallRenderer extends EntityRenderer<DragonBreathball> {
     private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/entity/enderdragon/dragon_fireball.png");
     private static final RenderType RENDER_TYPE;
 
@@ -25,13 +25,13 @@ public class DragonBreathBallRenderer extends EntityRenderer<DragonBreathBall> {
         super(context);
     }
 
-    protected int getBlockLightLevel(DragonBreathBall ball, BlockPos pos) {
+    protected int getBlockLightLevel(DragonBreathball ball, BlockPos pos) {
         return 15;
     }
 
-    public void render(DragonBreathBall ball, float p_114081_, float p_114082_, PoseStack poseStack, MultiBufferSource buffer, int p_114085_) {
+    public void render(DragonBreathball ball, float p_114081_, float p_114082_, PoseStack poseStack, MultiBufferSource buffer, int p_114085_) {
         poseStack.pushPose();
-        poseStack.scale(1.5F, 1.5F, 1.5F);
+        poseStack.scale(1F, 1F, 1F);
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
         PoseStack.Pose posestack$pose = poseStack.last();
@@ -50,7 +50,7 @@ public class DragonBreathBallRenderer extends EntityRenderer<DragonBreathBall> {
         p_114090_.vertex(p_114091_, p_114094_ - 0.5F, (float)p_114095_ - 0.25F, 0.0F).color(255, 255, 255, 255).uv((float)p_114096_, (float)p_114097_).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(p_114093_).normal(p_114092_, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    public ResourceLocation getTextureLocation(DragonBreathBall ball) {
+    public ResourceLocation getTextureLocation(DragonBreathball ball) {
         return TEXTURE_LOCATION;
     }
 

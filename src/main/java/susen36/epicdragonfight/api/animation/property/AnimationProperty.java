@@ -1,15 +1,10 @@
 package susen36.epicdragonfight.api.animation.property;
 
-import net.minecraft.world.phys.Vec3;
 import susen36.epicdragonfight.api.animation.TransformSheet;
 import susen36.epicdragonfight.api.animation.types.ActionAnimation;
 import susen36.epicdragonfight.api.animation.types.DynamicAnimation;
 import susen36.epicdragonfight.api.animation.types.StaticAnimation;
-import susen36.epicdragonfight.api.utils.HitEntityList.Priority;
-import susen36.epicdragonfight.api.utils.math.ValueCorrector;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
-
-import java.util.function.Function;
 
 public abstract class AnimationProperty<T> {
 	public static class StaticAnimationProperty<T> extends AnimationProperty<T> {
@@ -82,26 +77,11 @@ public abstract class AnimationProperty<T> {
 		 * This property determines if the animation has a fixed amount of move distance not depending on the distance between attacker and target entity
 		 */
 		public static final AttackAnimationProperty<Boolean> FIXED_MOVE_DISTANCE = new AttackAnimationProperty<Boolean> ();
-		
-		/**
-		 * This property determines how much the play speed affect by entity's attack speed.
-		 */
-		public static final AttackAnimationProperty<Float> ATTACK_SPEED_FACTOR = new AttackAnimationProperty<Float> ();
-		
-		/**
-		 * This property determines the basis of the speed factor. Without this value, the basis is the total animation time.
-		 */
-		public static final AttackAnimationProperty<Float> BASIS_ATTACK_SPEED = new AttackAnimationProperty<Float> ();
-		
+
 		/**
 		 * This property adds colliders when detecting hit entity by @MultiCollider.
 		 */
 		public static final AttackAnimationProperty<Integer> COLLIDER_ADDER = new AttackAnimationProperty<Integer> ();
 	}
-	
-	public static class AttackPhaseProperty<T> extends AnimationProperty<T> {
-		public static final AttackPhaseProperty<ValueCorrector> DAMAGE = new AttackPhaseProperty<ValueCorrector> ();
-		public static final AttackPhaseProperty<Priority> HIT_PRIORITY = new AttackPhaseProperty<Priority> ();
-		public static final AttackPhaseProperty<Function<LivingEntityPatch<?>, Vec3>> SOURCE_LOCATION_PROVIDER = new AttackPhaseProperty<Function<LivingEntityPatch<?>, Vec3>> ();
-	}
+
 }

@@ -2,6 +2,7 @@ package susen36.epicdragonfight.api.utils;
 
 import susen36.epicdragonfight.api.utils.TypeFlexibleHashMap.TypeKey;
 
+import java.io.Serial;
 import java.util.HashMap;
 
 public class TypeFlexibleHashMap<A extends TypeKey> extends HashMap<A, Object> {
@@ -20,10 +21,8 @@ public class TypeFlexibleHashMap<A extends TypeKey> extends HashMap<A, Object> {
 	public <T> T getOrDefault(TypeKey typeKey, T defaultVal) {
 		return (T)super.getOrDefault(typeKey, defaultVal);
 	}
-	
-	/**
-	 * 
-	 */
+
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public interface TypeKey {

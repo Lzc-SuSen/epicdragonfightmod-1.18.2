@@ -11,7 +11,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import susen36.epicdragonfight.EpicDragonFight;
 
-import java.util.OptionalDouble;
 import java.util.function.Function;
 
 @OnlyIn(Dist.CLIENT)
@@ -31,20 +30,6 @@ public class DragonFightRenderTypes extends RenderType {
 			.createCompositeState(true);
 	    return create(EpicDragonFight.MODID + ":animated_model", DefaultVertexFormat.NEW_ENTITY, Mode.TRIANGLES, 256, true, false, state);
 	});
-	
-	private static final Function<ResourceLocation, RenderType> ANIMATED_ITEM_ENTITY_TRANSLUCENT_CULL = Util.memoize((textureLocation) -> {
-		CompositeState state = CompositeState.builder()
-			.setShaderState(RENDERTYPE_ITEM_ENTITY_TRANSLUCENT_CULL_SHADER)
-			.setTextureState(new TextureStateShard(textureLocation, false, false))
-			.setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-			.setOutputState(ITEM_ENTITY_TARGET)
-			.setLightmapState(LIGHTMAP)
-			.setOverlayState(OVERLAY)
-			.setWriteMaskState(COLOR_DEPTH_WRITE)
-		.createCompositeState(true);
-		return create(EpicDragonFight.MODID + ":animated_item_entity_translucent_cull", DefaultVertexFormat.NEW_ENTITY, Mode.TRIANGLES, 256, true, true, state);
-	});
-	
 
 
 	private static final Function<ResourceLocation, RenderType> ENTITY_DECAL_TRIANGLES = Util.memoize((p_173194_) -> {
@@ -67,18 +52,7 @@ public class DragonFightRenderTypes extends RenderType {
 				.createCompositeState(true);
 		return create(EpicDragonFight.MODID + ":dragon_explosion_triangles", DefaultVertexFormat.NEW_ENTITY, Mode.TRIANGLES, 256, false, false, state);
 	});
-	private static final RenderType DEBUG_COLLIDER = create(EpicDragonFight.MODID + ":debug_collider", DefaultVertexFormat.POSITION_COLOR_NORMAL, Mode.QUADS, 256, false, false,
-			CompositeState.builder()
-				.setShaderState(POSITION_COLOR_SHADER)
-				.setLineState(new LineStateShard(OptionalDouble.empty()))
-				.setLayeringState(VIEW_OFFSET_Z_LAYERING)
-				.setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-				.setOutputState(ITEM_ENTITY_TARGET)
-				.setWriteMaskState(COLOR_DEPTH_WRITE)
-				.setCullState(NO_CULL)
-				.createCompositeState(false)
-	);
-	
+
 	private static final RenderType DEBUG_QUADS = create(EpicDragonFight.MODID + ":debug_quad", DefaultVertexFormat.POSITION_COLOR, Mode.QUADS, 256, false, false,
 			CompositeState.builder()
 				.setShaderState(POSITION_COLOR_SHADER)
@@ -88,16 +62,6 @@ public class DragonFightRenderTypes extends RenderType {
 				.setCullState(NO_CULL)
 				.createCompositeState(false)
 	);
-	
-	private static final Function<ResourceLocation, RenderType> ENTITY_TRANSLUCENT_TRIANGLES = (texture) -> create(EpicDragonFight.MODID + ":entity_transparent", DefaultVertexFormat.NEW_ENTITY, Mode.TRIANGLES, 256, false, true, CompositeState.builder()
-			.setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
-			.setTextureState(new TextureStateShard(texture, false, false))
-			.setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-			.setCullState(NO_CULL)
-			.setLightmapState(LIGHTMAP)
-			.setOverlayState(OVERLAY)
-			.setWriteMaskState(COLOR_DEPTH_WRITE)
-		.createCompositeState(false));
 
 
 	private static final Function<ResourceLocation, RenderType> EYES = Util.memoize((textureLocation) -> {
@@ -114,11 +78,7 @@ public class DragonFightRenderTypes extends RenderType {
 	public static RenderType animatedModel(ResourceLocation locationIn) {
 		return ANIMATED_MODEL.apply(locationIn);
 	}
-	
-	public static RenderType itemEntityTranslucentCull(ResourceLocation locationIn) {
-		return ANIMATED_ITEM_ENTITY_TRANSLUCENT_CULL.apply(locationIn);
-	}
-	
+
 
 	public static RenderType eyes(ResourceLocation locationIn) {
 		return EYES.apply(locationIn);
@@ -134,11 +94,4 @@ public class DragonFightRenderTypes extends RenderType {
 	public static RenderType debugQuads() {
 		return DEBUG_QUADS;
 	}
-	
-	public static RenderType debugCollider() {
-		return DEBUG_COLLIDER;
-	}
-
-	
-
 }

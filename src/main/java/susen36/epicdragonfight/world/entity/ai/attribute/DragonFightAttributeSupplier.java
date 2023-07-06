@@ -9,7 +9,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import java.util.Map;
 
-public class EpicFightAttributeSupplier extends AttributeSupplier {
+public class DragonFightAttributeSupplier extends AttributeSupplier {
 	private static Map<Attribute, AttributeInstance> putEpicFightAttributes(Map<Attribute, AttributeInstance> originalMap) {
 		Map<Attribute, AttributeInstance> newMap = Maps.newHashMap();
 		
@@ -23,7 +23,7 @@ public class EpicFightAttributeSupplier extends AttributeSupplier {
 		return ImmutableMap.copyOf(newMap);
 	}
 	
-	public EpicFightAttributeSupplier(AttributeSupplier copy) {
+	public DragonFightAttributeSupplier(AttributeSupplier copy) {
 		super(putEpicFightAttributes(copy.instances));
 	}
 }

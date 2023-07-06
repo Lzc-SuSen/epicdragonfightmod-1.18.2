@@ -10,7 +10,7 @@ displayName="Epic DragonFight" #mandatory
 #logoFile="examplemod.png" #optional
 #credits="Thanks for this example mod goes to Java" #optional
 #authors="Love, Cheese and small house plants" #optional
-description='''
+description='''ender dragon module independent from epicfight
 '''
 
 [[dependencies.epicdragonfight]] #optional

@@ -11,19 +11,11 @@ public class ClientEngine {
 	public Minecraft minecraft;
 	public RenderEngine renderEngine;
 
-	private boolean armorModelDebuggingMode;
-	
 	public ClientEngine() {
 		instance = this;
 		this.minecraft = Minecraft.getInstance();
 		this.renderEngine = new RenderEngine();
 
 	}
-	
-
-	public boolean isArmorModelDebuggingMode() {
-		return this.armorModelDebuggingMode;
-	}
-	
 
 }

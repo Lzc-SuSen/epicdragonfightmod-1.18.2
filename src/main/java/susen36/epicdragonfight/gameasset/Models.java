@@ -20,11 +20,6 @@ public abstract class Models<T extends Model> {
 		}
 		
 		@Override
-		public Models<?> getModels(boolean isLogicalClient) {
-			return LOGICAL_SERVER;
-		}
-		
-		@Override
 		public Model register(ResourceLocation rl) {
 			Model model = new Model(rl);
 			this.models.put(rl, model);
@@ -41,6 +36,4 @@ public abstract class Models<T extends Model> {
 	public void loadArmatures(ResourceManager resourceManager) {
 		this.dragon.loadArmatureData(resourceManager);
 	}
-	
-	public abstract Models<?> getModels(boolean isLogicalClient);
 }

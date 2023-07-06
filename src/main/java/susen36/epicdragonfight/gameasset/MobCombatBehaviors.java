@@ -9,17 +9,16 @@ import susen36.epicdragonfight.world.entity.ai.goal.CombatBehaviors.BehaviorSeri
 import susen36.epicdragonfight.world.entity.ai.goal.CombatBehaviors.Health.Comparator;
 
 public class MobCombatBehaviors {
-
 	public static final CombatBehaviors.Builder<EnderDragonPatch> ENDER_DRAGON = CombatBehaviors.<EnderDragonPatch>builder()
 		.newBehaviorSeries(
 			BehaviorSeries.<EnderDragonPatch>builder().weight(50.0F).canBeInterrupted(false).looping(false)
 				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK1).randomChance(0.1F).withinDistance(0.0D, 7.0D).withinAngle(0.0F, 60.0F))
-				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK3).withinDistance(0.0D, 7.0D))
-				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK2))
+				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK3).withinDistance(0.0D, 7.0D).withinAngle(0.0F, 40.0F))
+				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK2).withinDistance(0.0D, 5.0D).withinAngle(0.0F, 60.0F))
 		).newBehaviorSeries(
 			BehaviorSeries.<EnderDragonPatch>builder().weight(50.0F).canBeInterrupted(false).looping(false)
-				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK2).withinDistance(0.0D, 5.0D).withinAngle(0.0F, 60.0F))
-				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK3))
+				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK2).withinDistance(0.0D, 5.0D).withinAngle(0.0F, 80.0F))
+				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK3).withinDistance(0.0D, 7.0D).withinAngle(0.0F, 40.0F))
 				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_ATTACK1).randomChance(0.4F).withinDistance(0.0D, 7.0D))
 		).newBehaviorSeries(
 			BehaviorSeries.<EnderDragonPatch>builder().weight(50.0F).cooldown(200).simultaneousCooldown(3).canBeInterrupted(false).looping(false)
@@ -31,7 +30,6 @@ public class MobCombatBehaviors {
 			BehaviorSeries.<EnderDragonPatch>builder().weight(100.0F).canBeInterrupted(false).looping(false)
 				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_FIREBALL1).withinDistance(15.0D, 30.0D).withinAngleHorizontal(0.0F, 10.0F))
 				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_FIREBALL2).withinDistance(15.0D, 30.0D).withinAngleHorizontal(0.0F, 10.0F))
-				.nextBehavior(Behavior.<EnderDragonPatch>builder().animationBehavior(Animations.DRAGON_FIREBALL3).randomChance(0.6F).withinDistance(15.0D, 30.0D).withinAngleHorizontal(0.0F, 10.0F))
 			).newBehaviorSeries(
 			BehaviorSeries.<EnderDragonPatch>builder().weight(1000.0F).cooldown(0).canBeInterrupted(false).looping(false)
 				.nextBehavior(Behavior.<EnderDragonPatch>builder().health(0.3F, Comparator.LESS_RATIO).custom((mobpatch) -> mobpatch.getOriginal().getDragonFight().getCrystalsAlive() > 0)

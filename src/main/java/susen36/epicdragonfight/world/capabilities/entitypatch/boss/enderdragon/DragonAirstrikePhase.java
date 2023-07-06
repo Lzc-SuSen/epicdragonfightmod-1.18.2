@@ -143,9 +143,9 @@ public class DragonAirstrikePhase extends PatchedDragonPhase {
 							AreaEffectBreath breatharea = new AreaEffectBreath(this.dragon.level, createpos.x, createpos.y, createpos.z);
 							breatharea.setOwner((LivingEntity)this.dragon);
 							breatharea.setWaitTime(0);
-							breatharea.setRadius(0.5F);
-							breatharea.setDuration(15);
-							breatharea.setRadiusPerTick(0.2F);
+							breatharea.setRadius(0.7F);
+							breatharea.setDuration(20);
+							breatharea.setRadiusPerTick(0.3F);
 							breatharea.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 1));
 							breatharea.setDeltaMovement(0, -1, 0);
 							this.dragon.level.addFreshEntity(breatharea);

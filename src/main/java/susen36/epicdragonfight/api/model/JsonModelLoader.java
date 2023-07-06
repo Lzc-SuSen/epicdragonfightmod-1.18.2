@@ -1,17 +1,5 @@
 package susen36.epicdragonfight.api.model;
 
-import java.io.BufferedInputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.FloatBuffer;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -20,7 +8,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -28,6 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.commons.lang3.ArrayUtils;
 import susen36.epicdragonfight.EpicDragonFight;
 import susen36.epicdragonfight.api.animation.Joint;
 import susen36.epicdragonfight.api.animation.JointTransform;
@@ -42,6 +30,16 @@ import susen36.epicdragonfight.api.client.model.Mesh;
 import susen36.epicdragonfight.api.utils.math.OpenMatrix4f;
 import susen36.epicdragonfight.api.utils.math.Vec3f;
 import susen36.epicdragonfight.api.utils.math.Vec4f;
+
+import java.io.BufferedInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.FloatBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class JsonModelLoader {
 	public static final OpenMatrix4f CORRECTION = OpenMatrix4f.createRotatorDeg(-90.0F, Vec3f.X_AXIS);
@@ -96,7 +94,7 @@ public class JsonModelLoader {
 		
 		if (properties != null) {
 			return ClientModel.RenderProperties.builder()
-					.transparency(properties.has("transparent") ? properties.get("transparent").getAsBoolean() : false)
+					.transparency(properties.has("transparent") && properties.get("transparent").getAsBoolean())
 				.build();
 		} else {
 			return ClientModel.RenderProperties.builder().build();
@@ -197,7 +195,7 @@ public class JsonModelLoader {
 		boolean attack = animation instanceof AttackAnimation;
 		boolean root = true;
 		
-		if (!action && !attack) {
+		if (!action) {
 			if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) {
 				return;
 			}
@@ -314,9 +312,7 @@ public class JsonModelLoader {
 			}
 			
 			float[] matrixElements = new float[16];
-			for (int j = 0; j < 16; j++) {
-				matrixElements[j] = trasnformMatrix[i*16 + j];
-			}
+			System.arraycopy(trasnformMatrix, i * 16, matrixElements, 0, 16);
 			
 			OpenMatrix4f matrix = new OpenMatrix4f().load(FloatBuffer.wrap(matrixElements));
 			matrix.transpose();
@@ -330,8 +326,7 @@ public class JsonModelLoader {
 			JointTransform transform = new JointTransform(matrix.toTranslationVector(), matrix.toQuaternion(), matrix.toScaleVector());
 			keyframeList.add(new Keyframe(timeStamp, transform));
 		}
-		
-		TransformSheet sheet = new TransformSheet(keyframeList);
-		return sheet;
+
+		return new TransformSheet(keyframeList);
 	}
 }

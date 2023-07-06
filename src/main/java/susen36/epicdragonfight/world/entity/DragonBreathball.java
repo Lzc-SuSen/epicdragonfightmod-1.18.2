@@ -12,13 +12,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class DragonBreathBall extends Fireball {
+public class DragonBreathball extends Fireball {
 
-    private float explosionPower = 2F;
-    public DragonBreathBall(EntityType<DragonBreathBall> type, Level level) {
+    private float explosionPower = 2.F;
+    public DragonBreathball(EntityType<DragonBreathball> type, Level level) {
         super(type,level);
     }
-    public DragonBreathBall(Level level, LivingEntity entity, double p_181153_, double p_181154_, double p_181155_, float explosionPower) {
+    public DragonBreathball(Level level, LivingEntity entity, double p_181153_, double p_181154_, double p_181155_, float explosionPower) {
         super(DragonFightEntities.DRAGON_BREATH_BALL.get(), entity, p_181153_, p_181154_, p_181155_, level);
         this.explosionPower = explosionPower;
     }

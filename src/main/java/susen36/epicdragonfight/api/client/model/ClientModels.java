@@ -42,12 +42,7 @@ public class ClientModels extends Models<ClientModel> implements PreparableReloa
 		
 		emptyResourceLocations.forEach(this.models::remove);
 	}
-	
-	@Override
-	public Models<?> getModels(boolean isLogicalClient) {
-		return isLogicalClient ? LOGICAL_CLIENT : LOGICAL_SERVER;
-	}
-	
+
 	@Override
 	public CompletableFuture<Void> reload(PreparationBarrier stage, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
 		return CompletableFuture.runAsync(() -> {

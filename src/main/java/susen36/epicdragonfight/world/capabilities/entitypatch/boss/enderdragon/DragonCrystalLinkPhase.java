@@ -1,8 +1,8 @@
 package susen36.epicdragonfight.world.capabilities.entitypatch.boss.enderdragon;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
@@ -18,7 +18,7 @@ import susen36.epicdragonfight.gameasset.Animations;
 import java.util.List;
 
 public class DragonCrystalLinkPhase extends PatchedDragonPhase {
-	public static final float STUN_SHIELD_AMOUNT = 20.0F;
+	public static final float HEAL_AMOUNT = 15.0F;
 	public static final int CHARGING_TICK = 158;
 	private int chargingCount;
 	private EndCrystal linkingCrystal;
@@ -56,15 +56,14 @@ public class DragonCrystalLinkPhase extends PatchedDragonPhase {
 			
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 2; j++) {
-					//this.dragon.level.addAlwaysVisibleParticle(EpicFightParticles.FORCE_FIELD.get(), spawnPosition.x, spawnPosition.y, spawnPosition.z, x + 90.0D * i, Double.longBitsToDouble(this.dragon.getId()), z + 90.0D * j);
+					this.dragon.level.addAlwaysVisibleParticle(ParticleTypes.ASH, spawnPosition.x, spawnPosition.y, spawnPosition.z, x + 90.0D * i, Double.longBitsToDouble(this.dragon.getId()), z + 90.0D * j);
 				}
 			}
 		} else {
 			if (!this.dragonpatch.isLogicalClient()) {
-				int shieldCorrection = this.getPlayersNearbyWithin(100.0D).size() - 1;
-				float stunShield = STUN_SHIELD_AMOUNT + 15.0F * shieldCorrection;
-				
-
+				int healCorrection = this.getPlayersNearbyWithin(150.0D).size() - 1;
+				float getHeal = HEAL_AMOUNT + 10.0F * healCorrection;
+				this.dragon.heal(getHeal);
 			}
 		}
 	}
@@ -79,12 +78,7 @@ public class DragonCrystalLinkPhase extends PatchedDragonPhase {
 			this.dragon.level.explode((Entity)null, blockpos.getX(), blockpos.getY(), blockpos.getZ(), 6.0F, Explosion.BlockInteraction.DESTROY);
 		}
 	}
-	
-	@Override
-	public float onHurt(DamageSource damagesource, float amount) {
-		return amount;
-	}
-	
+
 	@Override
 	public void doClientTick() {
 		super.doClientTick();

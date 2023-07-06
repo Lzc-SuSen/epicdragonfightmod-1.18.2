@@ -96,7 +96,6 @@ public abstract class MultiCollider<T extends Collider> extends Collider {
 	
 	@Override
 	public void drawInternal(PoseStack matrixStackIn, MultiBufferSource buffer, OpenMatrix4f pose, boolean red) {
-		;
 	}
 	
 	@Override
@@ -106,7 +105,7 @@ public abstract class MultiCollider<T extends Collider> extends Collider {
 	
 	@Override
 	protected boolean isCollide(Entity opponent) {
-		return false;
+		return true;
 	}
 	
 	@Override

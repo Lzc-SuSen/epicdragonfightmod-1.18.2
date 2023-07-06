@@ -55,8 +55,10 @@ public class EnderDragonPatch extends MobPatch<EnderDragon> {
 		this.livingMotions.put(LivingMotions.CHASE, Animations.DRAGON_AIRSTRIKE);
 		this.livingMotions.put(LivingMotions.DEATH, Animations.DRAGON_DEATH);
 		super.onConstructed(entityIn);
-		
-		this.currentLivingMotion = LivingMotions.FLY;
+
+		if(this.currentLivingMotion!=LivingMotions.FLY){
+			this.currentLivingMotion=LivingMotions.WALK;
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -66,7 +68,7 @@ public class EnderDragonPatch extends MobPatch<EnderDragon> {
 		
 		DragonPhaseInstance currentPhase = this.original.phaseManager.getCurrentPhase();
 		EnderDragonPhase<?> startPhase = (currentPhase == null || !(currentPhase instanceof PatchedDragonPhase)) ? PatchedPhases.FLYING : this.original.phaseManager.getCurrentPhase().getPhase();
-		this.original.phaseManager = new PhaseManagerPatch(this.original, this);
+		this.original.phaseManager = new PhaseManagerPatch(this.original);
 		this.original.phaseManager.setPhase(startPhase);
 		entityIn.maxUpStep = 1.0F;
 		
@@ -79,7 +81,8 @@ public class EnderDragonPatch extends MobPatch<EnderDragon> {
 	@Override
 	protected void initAttributes() {
 		super.initAttributes();
-		this.original.getAttribute(Attributes.ARMOR).setBaseValue(5.0F);
+		this.original.getAttribute(Attributes.ARMOR).setBaseValue(250.0F);
+		this.original.getAttribute(Attributes.ARMOR).setBaseValue(4.0F);
 		this.original.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(2.0F);
 		this.original.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(12.0F);
 	}
@@ -110,13 +113,7 @@ public class EnderDragonPatch extends MobPatch<EnderDragon> {
 				}
 			} else {
 				if (phase.getPhase() == PatchedPhases.GROUND_BATTLE) {
-					if (this.original.getTarget() != null) {
 						this.currentLivingMotion = LivingMotions.WALK;
-					} else {
-						this.currentLivingMotion = LivingMotions.IDLE;
-					}
-				} else {
-					this.currentLivingMotion = LivingMotions.IDLE;
 				}
 			}
 		}

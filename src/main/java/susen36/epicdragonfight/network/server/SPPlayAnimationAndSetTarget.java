@@ -1,33 +1,22 @@
 package susen36.epicdragonfight.network.server;
 
-import java.util.function.Supplier;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.network.NetworkEvent;
-import susen36.epicdragonfight.api.animation.types.StaticAnimation;
-import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
+
+import java.util.function.Supplier;
 
 public class SPPlayAnimationAndSetTarget extends SPPlayAnimation {
 	protected int targetId;
 
-	public SPPlayAnimationAndSetTarget() {
-		super();
-		this.targetId = 0;
-	}
-	
 	public SPPlayAnimationAndSetTarget(int namespaceId, int animationId, int entityId, float modifyTime, int targetId) {
 		super(namespaceId, animationId, entityId, modifyTime);
 		this.targetId = targetId;
 	}
-	
-	public SPPlayAnimationAndSetTarget(StaticAnimation animation, float modifyTime, LivingEntityPatch<?> entitypatch) {
-		super(animation, modifyTime, entitypatch);
-		this.targetId = entitypatch.getTarget().getId();
-	}
+
 	
 	@Override
 	public void onArrive() {

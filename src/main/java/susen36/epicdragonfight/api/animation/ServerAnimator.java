@@ -34,15 +34,7 @@ public class ServerAnimator extends Animator {
 		this.entitypatch.updateEntityState();
 		this.nextPlaying = nextAnimation;
 	}
-	
-	@Override
-	public void playAnimationInstantly(StaticAnimation nextAnimation) {
-		this.pause = false;
-		this.animationPlayer.getAnimation().end(this.entitypatch, this.animationPlayer.isEnd());
-		nextAnimation.begin(this.entitypatch);
-		nextAnimation.putOnPlayer(this.animationPlayer);
-		this.entitypatch.updateEntityState();
-	}
+
 	
 	@Override
 	public void reserveAnimation(StaticAnimation nextAnimation) {

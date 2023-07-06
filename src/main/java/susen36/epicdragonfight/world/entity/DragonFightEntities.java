@@ -14,8 +14,8 @@ public class DragonFightEntities {
 		EntityType.Builder.<AreaEffectBreath>of(AreaEffectBreath::new, MobCategory.MISC)
 			.fireImmune().sized(6.0F, 0.5F).clientTrackingRange(10).updateInterval(Integer.MAX_VALUE).noSummon().build("area_effect_breath")
 		);
-	public static final RegistryObject<EntityType<DragonBreathBall>> DRAGON_BREATH_BALL = ENTITIES.register("dragon_breath_ball", () ->
-			EntityType.Builder.<DragonBreathBall>of(DragonBreathBall::new, MobCategory.MISC)
-					.fireImmune().sized(1.0F, 1.0F).clientTrackingRange(5).updateInterval(10).noSummon().build("dragon_breath_ball")
+	public static final RegistryObject<EntityType<DragonBreathball>> DRAGON_BREATH_BALL = ENTITIES.register("dragon_breath_ball", () ->
+			EntityType.Builder.<DragonBreathball>of(DragonBreathball::new, MobCategory.MISC)
+					.fireImmune().sized(0.8F, 0.8F).clientTrackingRange(5).updateInterval(10).noSummon().build("dragon_breath_ball")
 	);
 }

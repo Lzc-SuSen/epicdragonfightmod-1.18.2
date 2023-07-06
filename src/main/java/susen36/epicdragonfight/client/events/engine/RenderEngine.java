@@ -2,7 +2,6 @@ package susen36.epicdragonfight.client.events.engine;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,7 +19,6 @@ import net.minecraftforge.fml.common.Mod;
 import susen36.epicdragonfight.EpicDragonFight;
 import susen36.epicdragonfight.api.client.forgeevent.PatchedRenderersEvent;
 import susen36.epicdragonfight.api.client.forgeevent.RenderEnderDragonEvent;
-import susen36.epicdragonfight.api.utils.math.Vec3f;
 import susen36.epicdragonfight.client.renderer.patched.entity.PEnderDragonRenderer;
 import susen36.epicdragonfight.client.renderer.patched.entity.PatchedEntityRenderer;
 import susen36.epicdragonfight.world.capabilities.DragonFightCapabilities;
@@ -33,27 +31,11 @@ import java.util.function.Supplier;
 @SuppressWarnings("rawtypes")
 @OnlyIn(Dist.CLIENT)
 public class RenderEngine {
-	private static final Vec3f AIMING_CORRECTION = new Vec3f(-1.5F, 0.0F, 1.25F);
-	
-
-
-	private Minecraft minecraft;
 	private Map<EntityType<?>, Supplier<PatchedEntityRenderer>> entityRendererProvider;
 	private Map<EntityType<?>, PatchedEntityRenderer> entityRendererCache;
-
-	private boolean aiming;
-	private int zoomOutTimer = 0;
-	private int zoomCount;
-	private int zoomMaxCount = 20;
-	private float cameraXRot;
-	private float cameraYRot;
-	private float cameraXRotO;
-	private float cameraYRotO;
-	private boolean isPlayerRotationLocked;
 	
 	public RenderEngine() {
 		Events.renderEngine = this;
-		this.minecraft = Minecraft.getInstance();
 		this.entityRendererProvider = Maps.newHashMap();
 		this.entityRendererCache = Maps.newHashMap();
 	}

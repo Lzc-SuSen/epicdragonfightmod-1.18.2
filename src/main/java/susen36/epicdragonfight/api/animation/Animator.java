@@ -19,7 +19,6 @@ public abstract class Animator {
 	protected LivingEntityPatch<?> entitypatch;
 	
 	public abstract void playAnimation(StaticAnimation nextAnimation, float convertTimeModifier);
-	public abstract void playAnimationInstantly(StaticAnimation nextAnimation);
 	public abstract void tick();
 	/** Standby until the current animation is completely end. Mostly used for link two animations having the same last & first keyframe pose **/
 	public abstract void reserveAnimation(StaticAnimation nextAnimation);
@@ -32,10 +31,7 @@ public abstract class Animator {
 	public final void playAnimation(int namespaceId, int id, float convertTimeModifier) {
 		this.playAnimation(EpicDragonFight.getInstance().animationManager.findAnimationById(namespaceId, id), convertTimeModifier);
 	}
-	
-	public final void playAnimationInstantly(int namespaceId, int id) {
-		this.playAnimationInstantly(EpicDragonFight.getInstance().animationManager.findAnimationById(namespaceId, id));
-	}
+
 	
 	public Pose getPose(float partialTicks) {
 		return Pose.interpolatePose(this.prevPose, this.currentPose, partialTicks);

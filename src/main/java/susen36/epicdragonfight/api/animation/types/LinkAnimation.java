@@ -1,11 +1,11 @@
 package susen36.epicdragonfight.api.animation.types;
 
-import java.util.Map;
-
 import susen36.epicdragonfight.api.animation.JointTransform;
 import susen36.epicdragonfight.api.animation.Keyframe;
 import susen36.epicdragonfight.api.animation.Pose;
 import susen36.epicdragonfight.world.capabilities.entitypatch.LivingEntityPatch;
+
+import java.util.Map;
 
 public class LinkAnimation extends DynamicAnimation {
 	protected DynamicAnimation nextAnimation;
@@ -65,9 +65,6 @@ public class LinkAnimation extends DynamicAnimation {
 		this.nextAnimation = animation;
 	}
 
-	public DynamicAnimation getNextAnimation() {
-		return this.nextAnimation;
-	}
 	
 	@Override
 	public boolean isJointEnabled(LivingEntityPatch<?> entitypatch, String joint) {

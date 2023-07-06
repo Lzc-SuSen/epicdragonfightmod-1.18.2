@@ -1,25 +1,24 @@
 package susen36.epicdragonfight.mixin;
 
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.util.List;
-
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.google.common.primitives.Floats;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.mojang.math.Vector3f;
-
 import it.unimi.dsi.fastutil.ints.IntArrays;
 import it.unimi.dsi.fastutil.ints.IntConsumer;
 import net.minecraft.util.Mth;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.util.List;
 
 @Mixin(value = BufferBuilder.class)
 public abstract class MixinBufferBuilder {
@@ -96,6 +95,7 @@ public abstract class MixinBufferBuilder {
 		callbackInfo.cancel();
 	}
 	
+	@Unique
 	private void putSortedTriangleIndices(VertexFormat.IndexType indexType) {
 		float[] afloat = new float[this.sortingPoints.length];
 		int[] aint = new int[this.sortingPoints.length];
@@ -122,11 +122,11 @@ public abstract class MixinBufferBuilder {
 	}
 	
 	@Shadow
-	public abstract void ensureCapacity(int size);
+	protected abstract void ensureCapacity(int size);
 	@Shadow
-	public abstract void putSortedQuadIndices(VertexFormat.IndexType indexType);
+	protected abstract void putSortedQuadIndices(VertexFormat.IndexType indexType);
 	@Shadow
-	public abstract IntConsumer intConsumer(VertexFormat.IndexType indexType);
+	protected abstract IntConsumer intConsumer(VertexFormat.IndexType indexType);
 	
 	public Vector3f[] makeTrianglesSortingPoints() {
 		FloatBuffer floatbuffer = this.buffer.asFloatBuffer();

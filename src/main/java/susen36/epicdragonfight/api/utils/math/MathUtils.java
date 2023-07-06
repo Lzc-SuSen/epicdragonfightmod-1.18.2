@@ -3,7 +3,6 @@ package susen36.epicdragonfight.api.utils.math;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
@@ -17,22 +16,10 @@ public class MathUtils {
 		return modelMatrix;
 	}
 
-	public static Vec3 getVectorForRotation(float pitch, float yaw) {
-		float f = pitch * ((float) Math.PI / 180F);
-		float f1 = -yaw * ((float) Math.PI / 180F);
-		float f2 = Mth.cos(f1);
-		float f3 = Mth.sin(f1);
-		float f4 = Mth.cos(f);
-		float f5 = Mth.sin(f);
-
-		return new Vec3((double) (f3 * f4), (double) (-f5), (double) (f2 * f4));
-	}
-	
 	public static float lerpBetween(float f1, float f2, float zero2one) {
-		float f = 0;
+		float f;
 
 		for (f = f2 - f1; f < -180.0F; f += 360.0F) {
-			;
 		}
 
 		while (f >= 180.0F) {
@@ -139,30 +126,7 @@ public class MathUtils {
 		quat.k = z;
 		quat.r = w;
 	}
-	
-	public static Quaternion mulQuaternion(Quaternion left, Quaternion right, Quaternion dest) {
-		if (dest == null) {
-			dest = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
-		}
-		
-		float f = left.i();
-	    float f1 = left.j();
-	    float f2 = left.k();
-	    float f3 = left.r();
-	    float f4 = right.i();
-	    float f5 = right.j();
-	    float f6 = right.k();
-	    float f7 = right.r();
-	    float i = f3 * f4 + f * f7 + f1 * f6 - f2 * f5;
-	    float j = f3 * f5 - f * f6 + f1 * f7 + f2 * f4;
-	    float k = f3 * f6 + f * f5 - f1 * f4 + f2 * f7;
-	    float r = f3 * f7 - f * f4 - f1 * f5 - f2 * f6;
-	    
-	    dest.set(i, j, k, r);
-	    
-	    return dest;
-	}
-	
+
 	public static Quaternion lerpQuaternion(Quaternion from, Quaternion to, float weight) {
 		float fromX = from.i();
 		float fromY = from.j();

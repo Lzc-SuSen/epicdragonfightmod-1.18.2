@@ -17,8 +17,6 @@ public class SPPlayAnimationAndSyncTransform extends SPPlayAnimationAndSetTarget
 		this.posZ = posZ;
 		this.yRot = yRot;
 	}
-
-	
 	@Override
 	public void onArrive() {
 		super.onArrive();
@@ -50,5 +48,4 @@ public class SPPlayAnimationAndSyncTransform extends SPPlayAnimationAndSetTarget
 		buf.writeDouble(msg.posZ);
 		buf.writeFloat(msg.yRot);
 	}
-
 }
